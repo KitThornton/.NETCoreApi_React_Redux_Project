@@ -9,6 +9,8 @@ using Microsoft.Extensions.Logging;
 using System.Net.Http;
 using Microsoft.AspNetCore.Http;
 using System.Web;
+using WebApplication.Entities;
+using WebApplication.Repository;
 
 namespace WebApplication.Controllers
 {
@@ -49,25 +51,21 @@ namespace WebApplication.Controllers
     public class DefaultController : ControllerBase
     {
         // Fields
-        private readonly List<string> _listDefaultString;
-        private readonly Owner _owner;
+        // private readonly Owner _owner;
+        private readonly IOwnerRepository _ownerRepository;
         
         // Constructor
-        public DefaultController()
+        public DefaultController(IOwnerRepository ownerRepository)
         {
-            _listDefaultString = new List<string>() {"Kit", "Jonty", "Gabes", "Libby"};
-            _owner = new Owner()
-            {
-                id = 1, Name = "Kit", 
-                Address = "Home",
-                DateOfBirth = new DateTime(1996, 02, 20)
-            };
+            _ownerRepository = ownerRepository;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            IEnumerable<Owner> listOwner = new List<Owner>(){_owner};
+            //IEnumerable<Owner> listOwner = new List<Owner>(){_owner};
+            var listOwner = _ownerRepository.GetAll();
+            
             var result = new ObjectResult(listOwner)
             {
                 StatusCode = (int) HttpStatusCode.OK
@@ -81,13 +79,5 @@ namespace WebApplication.Controllers
 
             return result;
         }
-    }
-
-    public class Owner
-    {
-        public int id { get; set; }
-        public string Name { get; set; }
-        public DateTime DateOfBirth { get; set; }
-        public string Address { get; set; }
     }
 }
