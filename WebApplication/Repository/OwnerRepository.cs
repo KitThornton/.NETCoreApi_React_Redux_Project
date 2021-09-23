@@ -14,6 +14,7 @@ namespace WebApplication.Repository
 
         private IList<Owner> Collection { get; set; }
 
+        #region InMemoryCollection
         private static IList<Owner> InMemoryCollection { get; } = new List<Owner>
         {
             new Owner()
@@ -30,10 +31,13 @@ namespace WebApplication.Repository
                 DateOfBirth = new DateTime(1996, 02, 20)
             }
         };
-            
+        #endregion Region
+        
         public IEnumerable<Owner> GetAll()
         {
             return this.Collection;
         }
+        
+        public 
     }
 }
