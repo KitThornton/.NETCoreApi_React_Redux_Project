@@ -2,6 +2,7 @@ using System;
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using WebApplication.Entities;
 using WebApplication.Repository;
 
 namespace WebApplication.Controllers
@@ -12,19 +13,21 @@ namespace WebApplication.Controllers
     {
         // Fields
         private readonly IOwnerRepository _ownerRepository;
+        private readonly IAccountRepository _accountRepository;
         private ILogger<OwnerController> _logger;
         
         // Constructor
-        public OwnerController(IOwnerRepository ownerRepository, ILogger<OwnerController> ownerControllerLogger)
+        public OwnerController(IOwnerRepository ownerRepository, IAccountRepository accountRepository, ILogger<OwnerController> ownerControllerLogger)
         {
             _ownerRepository = ownerRepository;
+            _accountRepository = accountRepository;
             _logger = ownerControllerLogger;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            var listOwner = _ownerRepository.GetAll();
+            var listOwner = _ownerRepository.GetAllOwners();
             var result = new ObjectResult(listOwner)
             {
                 StatusCode = (int) HttpStatusCode.OK
@@ -35,13 +38,17 @@ namespace WebApplication.Controllers
         }
         
         [HttpGet("{id}/account")]
-        public IActionResult GetOwnerWithDetails(Guid id)
+        public IActionResult GetOwnerWithDetails(int id)
         {
             try
             {
-                var owner = _ownerRepository.GetOwnerWithDetails(id);
+                var owner = _ownerRepository.GetOwnerById(id);
 
-                if (owner == null)
+                var accounts = _accountRepository.AccountsByOwner(id);
+
+                var ownerExtended = new OwnerExtended(owner, accounts);
+                
+                if (ownerExtended == null)
                 {
                     _logger.LogError($"Owner with id: {id}, hasn't been found in db.");
                     return NotFound();
@@ -49,7 +56,8 @@ namespace WebApplication.Controllers
                 else
                 {
                     // _logger.Log($"Returned owner with details for id: {id}");
-                    return Ok(owner);
+                    Response.Headers.Add("Access-Control-Allow-Origin", "*");
+                    return Ok(ownerExtended);
                 }
             }
             catch (Exception ex)

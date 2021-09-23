@@ -10,6 +10,7 @@ import asyncComponent from "./hoc/AsyncComponent";
 import internalServer from "./components/errorpages/InternalServer";
 import NotFound from "./components/errorpages/NotFound";
 import errorHandlerReducer from "./store/reducers/errorHandlerReducer";
+import OwnerDetails from "./components/owner/OwnerDetails";
 
 const rootReducers = combineReducers({
     repository: repositoryReducer,
@@ -30,6 +31,7 @@ function App() {
                 <Switch>
                     <Route exact path='/' component={Home} />
                     <Route path='/owner-list' component={AsyncOwnerList} />
+                    <Route path='/ownerDetails/:id' component={OwnerDetails} />
                     <Route path='/500' component={internalServer} />
                     <Route path='*' component={NotFound} />
                 </Switch>

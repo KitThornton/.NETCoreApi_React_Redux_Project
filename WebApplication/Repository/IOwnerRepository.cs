@@ -6,8 +6,8 @@ namespace WebApplication.Repository
 {
     public interface IOwnerRepository
     {
-        public IEnumerable<Owner> GetAll();
-        public Owner GetOwnerById(Guid id);
-        public Owner GetOwnerWithDetails(Guid id);
+        public IEnumerable<Owner> GetAllOwners();
+        public Owner GetOwnerById(int id);
+        public OwnerExtended GetOwnerWithDetails(int id);
     }
 }

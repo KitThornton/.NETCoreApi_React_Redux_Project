@@ -12,7 +12,7 @@ namespace WebApplication.Entities
     {
         [Key]
         [Column("AccountId")]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Date created is required")]
         public DateTime DateCreated { get; set; }
@@ -22,6 +22,6 @@ namespace WebApplication.Entities
         public string AccountType { get; set; }
 
         [Required(ErrorMessage = "Owner Id is required")]
-        public Guid OwnerId { get; set; }
+        public int OwnerId { get; set; }
     }
 }

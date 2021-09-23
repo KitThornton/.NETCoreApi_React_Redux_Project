@@ -28,6 +28,7 @@ namespace WebApplication
         {
             services.AddControllers();
             services.AddSingleton<IOwnerRepository, OwnerRepository>();
+            services.AddSingleton<IAccountRepository, AccountRepository>();
 
             services.AddCors();
         }

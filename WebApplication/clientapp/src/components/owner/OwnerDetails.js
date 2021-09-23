@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Well, Row, Col } from 'react-bootstrap';
+import {Row, Col, Table} from 'react-bootstrap';
 import * as repositoryActions from '../../store/actions/repositoryActions';
 import Moment from 'react-moment';
 import OwnersAccounts from '../../components/owner/OwnerAccounts';
@@ -50,7 +50,7 @@ class OwnerDetails extends Component {
 
         return (
             <Aux>
-                <Well>
+                <Table>
                     <Row>
                         <Col md={3}>
                             <strong>Owner name:</strong>
@@ -68,11 +68,23 @@ class OwnerDetails extends Component {
                         </Col>
                     </Row>
                     {this.renderTypeOfUserConditionally(owner)}
-                </Well>
+                </Table>
                 <OwnersAccounts accounts={owner.accounts} />
             </Aux>
         )
     }
 }
 
-export default OwnerDetails;
+const mapStateToProps = (state) => {
+    return {
+        data: state.repository.data
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onGetData: (url, props) => dispatch(repositoryActions.getData(url, props))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(OwnerDetails);

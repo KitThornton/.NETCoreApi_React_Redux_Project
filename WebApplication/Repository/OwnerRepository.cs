@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using WebApplication.Controllers;
 using WebApplication.Entities;
 
@@ -20,32 +21,33 @@ namespace WebApplication.Repository
             new Owner()
             {
                 DateOfBirth = new DateTime(1996, 10, 20),
-                id = 2,
+                Id = 1,
                 Name = "Jonty",
                 Address = "Home"
             },
             new Owner()
             {
-                id = 1, Name = "Kit",
+                Id = 2, 
+                Name = "Kit",
                 Address = "Home",
                 DateOfBirth = new DateTime(1996, 02, 20)
             }
         };
         #endregion Region
         
-        public IEnumerable<Owner> GetAll()
+        public IEnumerable<Owner> GetAllOwners()
         {
             return this.Collection;
         }
 
-        public Owner GetOwnerById(Guid id)
+        public Owner GetOwnerById(int id)
         {
-            return new Owner();
+            return this.Collection.First(x => x.Id.Equals(id));
         }
 
-        public Owner GetOwnerWithDetails(Guid id)
+        public OwnerExtended GetOwnerWithDetails(int id)
         {
-            return new Owner();
+            return new OwnerExtended();
         }
     }
 }

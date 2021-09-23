@@ -8,7 +8,7 @@ import Owner from './Owner';
 
 class OwnerList extends Component {
     componentDidMount() {
-        let url = 'owner';
+        let url = '/api/owner';
         this.props.onGetData(url, {...this.props});
     }
     
