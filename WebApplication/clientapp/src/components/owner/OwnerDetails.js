@@ -13,6 +13,10 @@ class OwnerDetails extends Component {
         let url = '/api/owner/' + id + '/account';
         this.props.onGetData(url, { ...this.props })
     }
+    
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        
+    }
 
     renderTypeOfUserConditionally = (owner) => {
         let typeOfUser = null;
@@ -46,11 +50,11 @@ class OwnerDetails extends Component {
     }
     
     render() {
-        const owner = this.props.data;
+        let owner = this.props.data;
 
         return (
             <Aux>
-                <Table>
+                <Table striped>
                     <Row>
                         <Col md={3}>
                             <strong>Owner name:</strong>
