@@ -37,7 +37,15 @@ namespace WebApplication.Repository
         {
             return this.Collection;
         }
-        
-        public 
+
+        public Owner GetOwnerById(Guid id)
+        {
+            return new Owner();
+        }
+
+        public Owner GetOwnerWithDetails(Guid id)
+        {
+            return new Owner();
+        }
     }
 }

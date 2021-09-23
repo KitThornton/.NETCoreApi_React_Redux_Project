@@ -34,14 +34,14 @@ namespace WebApplication.Controllers
             return result;
         }
         
-        HttpGet("{id}/account")]
+        [HttpGet("{id}/account")]
         public IActionResult GetOwnerWithDetails(Guid id)
         {
             try
             {
-                var owner = _ownerRepository.Owner.GetOwnerWithDetails(id);
+                var owner = _ownerRepository.GetOwnerWithDetails(id);
 
-                if (owner.IsEmptyObject())
+                if (owner == null)
                 {
                     _logger.LogError($"Owner with id: {id}, hasn't been found in db.");
                     return NotFound();
